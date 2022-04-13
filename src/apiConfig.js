@@ -1,0 +1,9 @@
+
+// Determines dev API or prod API.
+// const API_URL = window.location.hostname === 'localhost' ?
+//   'localhost:8000' :
+//   'https://fitkick-api.herokuapp.com/';
+
+const API_URL = 'https://fitkick-api.herokuapp.com/'
+
+export default API_URL;
