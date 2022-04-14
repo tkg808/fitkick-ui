@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import WorkoutForm from './WorkoutForm';
 
-export default function WorkoutNew({ loggedIn })
+import API_URL from '../apiConfig';
+
+export default function WorkoutNew({ loggedIn, exercisesList })
 {
   const initialData =
   {
@@ -13,28 +16,27 @@ export default function WorkoutNew({ loggedIn })
   const navigate = useNavigate();
   const [newWorkout, setNewWorkout] = useState(initialData);
 
-  const handleChange = (event) =>
+  function handleChange(event)
   {
     setNewWorkout((prevState) =>
     {
       return { ...prevState, [event.target.name]: event.target.value };
     });
-  };
+  }
 
   async function createWorkout(event)
   {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    console.log(formData);
-
+    console.log(newWorkout);
     try
     {
       const response = await fetch(API_URL + 'workouts/',
         {
           method: 'POST',
-          body: formData,
+          body: JSON.stringify(newWorkout),
           headers:
           {
+            'Content-Type': 'application/json',
             Authorization: `Token ${localStorage.getItem('token')}`,
           }
         });
@@ -50,13 +52,25 @@ export default function WorkoutNew({ loggedIn })
     }
   }
 
+  function handleAdd(exerciseToAdd)
+  {
+    console.log(exerciseToAdd);
+
+    const temp = [...newWorkout.exercises, exerciseToAdd];
+    setNewWorkout({ ...newWorkout, exercises: temp });
+  }
+
+  console.log(newWorkout);
+
   return (
     <div>
-      <h2>Add a Workout</h2>
+      <h2>Create New Workout</h2>
       <WorkoutForm
         handleSubmit={createWorkout}
         handleChange={handleChange}
         formData={newWorkout}
+        handleAdd={handleAdd}
+        exercisesList={exercisesList}
       />
     </div>
   );

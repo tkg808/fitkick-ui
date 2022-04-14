@@ -1,7 +1,8 @@
 
 import { Form, Button, Alert } from 'react-bootstrap';
+import ExerciseDropdown from './ExerciseDropdown';
 
-export default function WorkoutForm({ handleSubmit, handleChange, formData })
+export default function WorkoutForm({ handleSubmit, handleChange, formData, handleAdd, exercisesList })
 {
   return (
     <div className='w-75 p-3'>
@@ -20,31 +21,33 @@ export default function WorkoutForm({ handleSubmit, handleChange, formData })
         <Form.Group controlId='notes'>
           <Form.Label>Notes</Form.Label>
           <Form.Control
-            autoFocus
             type='text'
-            name='name'
+            name='notes'
             onChange={handleChange}
-            value={formData.name}
+            value={formData.notes}
           />
         </Form.Group>
         <Form.Group controlId='exercises'>
+          <ExerciseDropdown
+            handleAdd={handleAdd}
+            exercisesList={exercisesList} />
           <Form.Label>Exercises</Form.Label>
           <Form.Control
-            type='text'
+            // type='text'
             name='exercises'
             onChange={handleChange}
             value={formData.exercises}
           />
         </Form.Group>
 
-        <Button className='mt-4' type='submit' disabled={error}>
+        <Button className='mt-4' type='submit'>
           Submit
         </Button>
-        {error && (
+        {/* {error && (
           <Alert variant='danger'>
             Oops, something went wrong! Please try again!
           </Alert>
-        )}
+        )} */}
       </Form>
     </div>
   );

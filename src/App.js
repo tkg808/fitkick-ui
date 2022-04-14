@@ -5,6 +5,9 @@ import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Workouts from './components/Workouts';
 import WorkoutDetails from './components/WorkoutDetails';
+import WorkoutEdit from './components/WorkoutEdit';
+import WorkoutNew from './components/WorkoutNew';
+
 import Signup from './components/Signup';
 import Login from './components/Login';
 
@@ -172,6 +175,19 @@ export default function App()
                 loggedIn={loggedIn}
                 exercisesList={exercisesList}
                 setExercisesList={setWorkoutsList}
+              />}
+            />
+            <Route
+              path='/workouts/new'
+              element={<WorkoutNew
+                loggedIn={loggedIn}
+                exercisesList={exercisesList}
+              />}
+            />
+            <Route
+              path='/workouts/:id/edit'
+              element={<WorkoutEdit
+                exercisesList={exercisesList}
               />}
             />
             <Route

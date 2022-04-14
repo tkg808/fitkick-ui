@@ -94,9 +94,33 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList, setE
     }
   }
 
-  function handleDelete(event)
+  async function handleDelete(event)
   {
-    return;
+    const confirm = window.confirm('Are you sure you want to delete?');
+
+    if (confirm)
+    {
+      try
+      {
+        const response = await fetch(API_URL + `workouts/${id}`,
+          {
+            method: 'DELETE',
+            headers:
+            {
+              Authorization: `Token ${localStorage.getItem('token')}`,
+            }
+          });
+
+        if (response.status === 204)
+        {
+          navigate('/workouts');
+        }
+      }
+      catch (error)
+      {
+        console.log(error);
+      }
+    }
   }
 
   useEffect(() =>
