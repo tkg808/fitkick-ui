@@ -9,8 +9,8 @@ export default function Workouts({ loggedIn, workoutsList, setWorkoutsList })
     <Container>
       <h1>Workouts</h1>
       {loggedIn && (
-        <Link to='/restaurants/new'>
-          <Button className='mb-4'>Add a restaurant</Button>
+        <Link to='/workouts/new'>
+          <Button className='mb-4'>Add a Workout</Button>
         </Link>
       )}
 

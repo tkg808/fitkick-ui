@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import ExerciseDropdown from './ExerciseDropdown';
+
 import API_URL from '../apiConfig';
 
 export default function WorkoutDetails({ userInfo, loggedIn, exercisesList, setExercisesList })
 {
+  const navigate = useNavigate();
   const [workout, setWorkout] = useState(null);
   const { id } = useParams();
 
@@ -27,33 +30,62 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList, setE
     }
   }
 
-  async function handleAdd(newId)
+  async function handleAdd(exerciseToAdd)
   {
-    console.log(newId);
-    const exerciseToAdd = exercisesList[newId - 1];
     console.log(exerciseToAdd);
 
-    const temp = [...workout.exercises, exerciseToAdd.name];
-    setWorkout({ ...workout, exercises: temp });
-    console.log(workout);
-    console.log(temp);
+    const updateData = { ...workout };
+    updateData.exercises.push(exerciseToAdd);
+    console.log(updateData);
 
     try
     {
-
-
       const response = await fetch(API_URL + `workouts/${id}`,
         {
           method: 'PUT',
-          body: workout,
-          headers: {
+          body: JSON.stringify(updateData),
+          headers:
+          {
+            'Content-Type': 'application/json',
             Authorization: `Token ${localStorage.getItem('token')}`,
           },
         });
 
       if (response.status === 200)
       {
-        Navigate(`/workouts/${id}`);
+        navigate(`/workouts/${id}`);
+      }
+    }
+    catch (error)
+    {
+      console.log(error);
+    }
+  }
+
+  async function handleRemove(index)
+  {
+    console.log(index);
+
+    const updateData = { ...workout };
+    updateData.exercises = updateData.exercises.splice(index, 1);
+    console.log(updateData);
+
+    try
+    {
+      const response = await fetch(API_URL + `workouts/${id}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(updateData),
+          headers:
+          {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token')}`,
+          },
+        });
+
+      if (response.status === 200)
+      {
+        navigate(`/workouts/${id}`);
       }
     }
     catch (error)
@@ -99,22 +131,12 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList, setE
       <h2 className='mt-4'>Exercises: </h2>
       {!workout.exercises.length && <p>Try adding some exercises!</p>}
       {loggedIn &&
-        <Dropdown >
-          <Dropdown.Toggle variant='success'>Add Exercise</Dropdown.Toggle>
-          <Dropdown.Menu >
-            {exercisesList.map((option) =>
-            {
-              return (
-                <Dropdown.Item
-                  key={option.id}
-                  onClick={() => handleAdd(option.id)}
-                >
-                  {option.name}
-                </Dropdown.Item>
-              )
-            })}
-          </Dropdown.Menu>
-        </Dropdown>}
+        <ExerciseDropdown
+          handleAdd={handleAdd}
+          exercisesList={exercisesList}
+        />
+      }
+
       {
         workout.exercises.length > 0 &&
         workout.exercises.map((exercise, index) =>
@@ -126,10 +148,12 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList, setE
               <h4>{exercise}</h4>
               {userInfo && userInfo.username === workout.owner && (
                 <div>
-                  <Button variant='secondary' className='m-4'>
-                    Edit
+                  <Button
+                    variant='danger'
+                    onClick={() => handleRemove(index)}
+                  >
+                    Remove
                   </Button>
-                  <Button variant='danger'>Delete</Button>
                 </div>
               )}
             </Container>
