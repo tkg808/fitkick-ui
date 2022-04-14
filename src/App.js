@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Workouts from './components/Workouts';
+import WorkoutDetails from './components/WorkoutDetails';
 import Signup from './components/Signup';
 import Login from './components/Login';
 
@@ -162,6 +163,15 @@ export default function App()
                 loggedIn={loggedIn}
                 workoutsList={workoutsList}
                 setWorkoutsList={setWorkoutsList}
+              />}
+            />
+            <Route
+              path='/workouts/:id'
+              element={<WorkoutDetails
+                userInfo={userInfo}
+                loggedIn={loggedIn}
+                exercisesList={exercisesList}
+                setExercisesList={setWorkoutsList}
               />}
             />
             <Route

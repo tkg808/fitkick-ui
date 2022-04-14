@@ -8,11 +8,11 @@ export default function Workouts({ loggedIn, workoutsList, setWorkoutsList })
   return (
     <Container>
       <h1>Workouts</h1>
-      {/* {loggedIn && (
+      {loggedIn && (
         <Link to='/restaurants/new'>
           <Button className='mb-4'>Add a restaurant</Button>
         </Link>
-      )} */}
+      )}
 
       <Row xs={1} s={2} md={3}>
         {workoutsList.map((workout) =>
