@@ -4,9 +4,13 @@ import { Container } from 'react-bootstrap';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Workouts from './components/Workouts';
+import WorkoutNew from './components/WorkoutNew';
 import WorkoutDetails from './components/WorkoutDetails';
 import WorkoutEdit from './components/WorkoutEdit';
-import WorkoutNew from './components/WorkoutNew';
+import Exercises from './components/Exercises';
+import ExerciseNew from './components/ExerciseNew';
+import ExerciseDetails from './components/ExerciseDetails';
+import ExerciseEdit from './components/ExerciseEdit';
 
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -164,8 +168,16 @@ export default function App()
               path='/workouts'
               element={<Workouts
                 loggedIn={loggedIn}
+                getWorkoutsList={getWorkoutsList}
                 workoutsList={workoutsList}
                 setWorkoutsList={setWorkoutsList}
+              />}
+            />
+            <Route
+              path='/workouts/new'
+              element={<WorkoutNew
+                loggedIn={loggedIn}
+                exercisesList={exercisesList}
               />}
             />
             <Route
@@ -178,17 +190,36 @@ export default function App()
               />}
             />
             <Route
-              path='/workouts/new'
-              element={<WorkoutNew
-                loggedIn={loggedIn}
-                exercisesList={exercisesList}
-              />}
-            />
-            <Route
               path='/workouts/:id/edit'
               element={<WorkoutEdit
                 exercisesList={exercisesList}
               />}
+            />
+            <Route
+              path='/exercises'
+              element={<Exercises
+                loggedIn={loggedIn}
+                getExercisesList={getExercisesList}
+                exercisesList={exercisesList}
+                setExercisesList={setExercisesList}
+              />}
+            />
+            <Route
+              path='/exercises/new'
+              element={<ExerciseNew
+                loggedIn={loggedIn}
+              />}
+            />
+            <Route
+              path='/exercises/:id'
+              element={<ExerciseDetails
+                userInfo={userInfo}
+                loggedIn={loggedIn}
+              />}
+            />
+            <Route
+              path='/exercises/:id/edit'
+              element={<ExerciseEdit />}
             />
             <Route
               path='/signup'

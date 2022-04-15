@@ -2,37 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
-export default function Workouts({ loggedIn, getWorkoutsList, workoutsList, setWorkoutsList })
+export default function Exercises({ loggedIn, getExercisesList, exercisesList })
 {
-  // Refetches when navigated here via useNavigate.
-  // Cleaner UI -- list items change appropriately.
   useEffect(() =>
   {
-    getWorkoutsList();
+    getExercisesList();
   }, []);
 
   return (
     <Container>
-      <h1>Workouts</h1>
+      <h1>Exercises</h1>
       {loggedIn && (
-        <Link to='/workouts/new'>
-          <Button className='mb-4'>Add a Workout</Button>
+        <Link to='/exercises/new'>
+          <Button className='mb-4'>Create an Exercise</Button>
         </Link>
       )}
 
       <Row xs={1} s={2} md={3}>
-        {workoutsList.map((workout) =>
+        {exercisesList.map((exercise) =>
         {
           return (
-            <Col key={workout.id} className='mb-4'>
+            <Col key={exercise.id} className='mb-4'>
               <Link
-                to={`/workouts/${workout.id}`}
+                to={`/exercises/${exercise.id}`}
                 style={{ color: 'black', textDecoration: 'none' }}>
                 <Card>
                   <Card.Body>
-                    <Card.Title>{workout.name}</Card.Title>
+                    <Card.Title>{exercise.name}</Card.Title>
                     <Card.Text>
-                      Number of exercises: {workout.exercises.length}
+                      Notes: {exercise.notes}
                     </Card.Text>
                   </Card.Body>
                 </Card>

@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Dropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { Container, Button } from 'react-bootstrap';
 import ExerciseDropdown from './ExerciseDropdown';
 
 import API_URL from '../apiConfig';
 
-export default function WorkoutDetails({ userInfo, loggedIn, exercisesList, setExercisesList })
+export default function WorkoutDetails({ userInfo, loggedIn, exercisesList })
 {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [workout, setWorkout] = useState(null);
-  const { id } = useParams();
 
-  async function getWorkout()
+  async function getWorkoutDetails()
   {
     try
     {
@@ -125,7 +124,7 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList, setE
 
   useEffect(() =>
   {
-    getWorkout();
+    getWorkoutDetails();
   }, [])
 
   if (!workout)
