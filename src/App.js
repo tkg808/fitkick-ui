@@ -11,10 +11,8 @@ import Exercises from './components/Exercises';
 import ExerciseNew from './components/ExerciseNew';
 import ExerciseDetails from './components/ExerciseDetails';
 import ExerciseEdit from './components/ExerciseEdit';
-
 import Signup from './components/Signup';
 import Login from './components/Login';
-
 
 import API_URL from './apiConfig';
 import './App.css';
@@ -162,7 +160,10 @@ export default function App()
           <Routes>
             <Route
               path='/'
-              element={<Home />}
+              element={<Home
+                loggedIn={loggedIn}
+                userInfo={userInfo}
+              />}
             />
             <Route
               path='/workouts'

@@ -153,32 +153,15 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList })
       </div>
       <h2 className='mt-4'>Exercises: </h2>
       {!workout.exercises.length && <p>Try adding some exercises!</p>}
-      {loggedIn &&
-        <ExerciseDropdown
-          handleAdd={handleAdd}
-          exercisesList={exercisesList}
-        />
-      }
-
       {
         workout.exercises.length > 0 &&
         workout.exercises.map((exercise, index) =>
         {
           return (
             <Container
-              className='m-4 p-5 border rounded-3 bg-light'
+              className='m-4 p-3 border rounded-3 bg-light'
               key={index}>
               <h4>{exercise}</h4>
-              {userInfo && userInfo.username === workout.owner && (
-                <div>
-                  <Button
-                    variant='danger'
-                    onClick={() => handleRemove(index)}
-                  >
-                    Remove
-                  </Button>
-                </div>
-              )}
             </Container>
           );
         })
