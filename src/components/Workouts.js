@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 
-export default function Workouts({ loggedIn, getWorkoutsList, workoutsList, setWorkoutsList })
+export default function Workouts({ userInfo, loggedIn, getWorkoutsList, workoutsList, setWorkoutsList })
 {
   // Refetches when navigated here via useNavigate.
   // Cleaner UI -- list items change appropriately.
@@ -10,6 +10,21 @@ export default function Workouts({ loggedIn, getWorkoutsList, workoutsList, setW
   {
     getWorkoutsList();
   }, []);
+
+  if (!loggedIn || !userInfo)
+  {
+    return (
+      <Container className='p-5 border rounded-3 bg-light'>
+        <h1>Workouts</h1>
+        <h4>Find a workout that suits your needs...or make one!</h4>
+        <Image
+          rounded
+          fluid
+          src='https://cdn.pixabay.com/photo/2021/01/04/06/21/man-5886578_960_720.jpg'
+        />
+      </Container>
+    )
+  }
 
   return (
     <Container>

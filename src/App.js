@@ -51,6 +51,7 @@ export default function App()
       if (response.status === 200)
       {
         const data = await response.json();
+        console.log(data);
         setUserInfo(data);
       }
     }
@@ -64,6 +65,9 @@ export default function App()
   async function handleLogout()
   {
     setError(false);
+    // Use here to prevent weird UI caused by server error.
+    setLoggedIn(false);
+    setUserInfo(null);
 
     try
     {
@@ -78,8 +82,7 @@ export default function App()
 
       if (response.status === 204)
       {
-        setLoggedIn(false);
-        setUserInfo(null);
+
         localStorage.removeItem('token');
         alert('You have been logged out!');
         navigate('/');
@@ -168,6 +171,7 @@ export default function App()
             <Route
               path='/workouts'
               element={<Workouts
+                userInfo={userInfo}
                 loggedIn={loggedIn}
                 getWorkoutsList={getWorkoutsList}
                 workoutsList={workoutsList}
@@ -199,6 +203,7 @@ export default function App()
             <Route
               path='/exercises'
               element={<Exercises
+                userInfo={userInfo}
                 loggedIn={loggedIn}
                 getExercisesList={getExercisesList}
                 exercisesList={exercisesList}

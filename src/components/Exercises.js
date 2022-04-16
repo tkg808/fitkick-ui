@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 
-export default function Exercises({ loggedIn, getExercisesList, exercisesList })
+export default function Exercises({ userInfo, loggedIn, getExercisesList, exercisesList })
 {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchType, setSearchType] = useState("names");
@@ -11,6 +11,21 @@ export default function Exercises({ loggedIn, getExercisesList, exercisesList })
   {
     getExercisesList();
   }, []);
+
+  if (!loggedIn || !userInfo)
+  {
+    return (
+      <Container className='p-5 border rounded-3 bg-light'>
+        <h1>Exercises</h1>
+        <h4>Find exercises based on type or muscles used!</h4>
+        <Image
+          rounded
+          fluid
+          src='https://cdn.pixabay.com/photo/2017/03/04/14/00/yoga-2116093_960_720.jpg'
+        />
+      </Container>
+    )
+  }
 
   function handleChange(event)
   {
