@@ -69,7 +69,8 @@ export default function WorkoutNew({ loggedIn, exercisesList })
         handleSubmit={createWorkout}
         handleChange={handleChange}
         formData={newWorkout}
-        handleAdd={handleAdd}
+        setFormData={setNewWorkout}
+        // handleAdd={handleAdd}
         exercisesList={exercisesList}
       />
     </div>

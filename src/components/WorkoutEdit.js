@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Button } from 'react-bootstrap';
 import WorkoutForm from './WorkoutForm';
 
 import API_URL from '../apiConfig';
@@ -9,6 +10,7 @@ export default function WorkoutEdit({ exercisesList })
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // Request.body for PUT.
   const [updatedWorkout, setUpdatedWorkout] = useState(null);
 
   async function getWorkoutDetails()
@@ -33,6 +35,7 @@ export default function WorkoutEdit({ exercisesList })
     getWorkoutDetails();
   }, [])
 
+  // Dynamically updates state.
   function handleChange(event)
   {
     setUpdatedWorkout((prevState) =>
@@ -41,17 +44,20 @@ export default function WorkoutEdit({ exercisesList })
     });
   }
 
-  function handleAdd(exerciseToAdd)
-  {
-    console.log(exerciseToAdd);
+  // Selecting an exercise from dropdown.
+  // function handleAdd(exerciseToAdd)
+  // {
+  //   console.log(exerciseToAdd);
 
-    const temp = [...updatedWorkout.exercises, exerciseToAdd];
-    setUpdatedWorkout({ ...updatedWorkout, exercises: temp });
-  }
+  //   const temp = [...updatedWorkout.exercises, exerciseToAdd];
+  //   setUpdatedWorkout({ ...updatedWorkout, exercises: temp });
+  // }
 
+  // Send PUT request.
   async function handleSubmit(event)
   {
     event.preventDefault();
+    console.log(typeof updatedWorkout.exercises[0]);
 
     try
     {
@@ -68,6 +74,7 @@ export default function WorkoutEdit({ exercisesList })
 
       if (response.status === 200)
       {
+        // Let user see updated workout details.
         navigate(`/workouts/${id}`);
       }
     }
@@ -90,9 +97,10 @@ export default function WorkoutEdit({ exercisesList })
       < WorkoutForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}
-        handleAdd={handleAdd}
-        exercisesList={exercisesList}
+        // handleAdd={handleAdd}
         formData={updatedWorkout}
+        setFormData={setUpdatedWorkout}
+        exercisesList={exercisesList}
       />
     </div>
   );

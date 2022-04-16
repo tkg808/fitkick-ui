@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Container, Button } from 'react-bootstrap';
-import ExerciseDropdown from './ExerciseDropdown';
 
 import API_URL from '../apiConfig';
 
@@ -29,71 +28,41 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList })
     }
   }
 
-  async function handleAdd(exerciseToAdd)
-  {
-    console.log(exerciseToAdd);
+  // async function handleAdd(exerciseToAdd)
+  // {
+  //   console.log(exerciseToAdd);
 
-    const updateData = { ...workout };
-    updateData.exercises.push(exerciseToAdd);
-    console.log(updateData);
+  //   const updateData = { ...workout };
+  //   updateData.exercises.push(exerciseToAdd);
+  //   console.log(updateData);
 
-    try
-    {
-      const response = await fetch(API_URL + `workouts/${id}`,
-        {
-          method: 'PUT',
-          body: JSON.stringify(updateData),
-          headers:
-          {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('token')}`,
-          },
-        });
+  //   try
+  //   {
+  //     const response = await fetch(API_URL + `workouts/${id}`,
+  //       {
+  //         method: 'PUT',
+  //         body: JSON.stringify(updateData),
+  //         headers:
+  //         {
+  //           'Content-Type': 'application/json',
+  //           Authorization: `Token ${localStorage.getItem('token')}`,
+  //         },
+  //       });
 
-      if (response.status === 200)
-      {
-        navigate(`/workouts/${id}`);
-      }
-    }
-    catch (error)
-    {
-      console.log(error);
-    }
-  }
+  //     if (response.status === 200)
+  //     {
+  //       navigate(`/workouts/${id}`);
+  //     }
+  //   }
+  //   catch (error)
+  //   {
+  //     console.log(error);
+  //   }
+  // }
 
-  async function handleRemove(index)
-  {
-    console.log(index);
 
-    const updateData = { ...workout };
-    updateData.exercises = updateData.exercises.splice(index, 1);
-    console.log(updateData);
 
-    try
-    {
-      const response = await fetch(API_URL + `workouts/${id}`,
-        {
-          method: 'PUT',
-          body: JSON.stringify(updateData),
-          headers:
-          {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('token')}`,
-          },
-        });
-
-      if (response.status === 200)
-      {
-        navigate(`/workouts/${id}`);
-      }
-    }
-    catch (error)
-    {
-      console.log(error);
-    }
-  }
-
-  async function handleDelete(event)
+  async function handleDelete()
   {
     const confirm = window.confirm('Are you sure you want to delete?');
 
@@ -127,6 +96,9 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList })
     getWorkoutDetails();
   }, [])
 
+  console.log(workout);
+
+  // Prevents weird UI before state can update.
   if (!workout)
   {
     return null;

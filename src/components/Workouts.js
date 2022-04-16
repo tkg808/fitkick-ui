@@ -26,6 +26,9 @@ export default function Workouts({ userInfo, loggedIn, getWorkoutsList, workouts
     )
   }
 
+  console.log(userInfo);
+  console.log(workoutsList);
+
   return (
     <Container>
       <h1>Workouts</h1>
