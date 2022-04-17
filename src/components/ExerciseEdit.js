@@ -28,11 +28,6 @@ export default function ExerciseEdit()
     }
   }
 
-  useEffect(() =>
-  {
-    getExerciseDetails();
-  }, []);
-
   function handleChange(event)
   {
     setUpdatedExercise((prevState) =>
@@ -69,7 +64,10 @@ export default function ExerciseEdit()
     }
   }
 
-
+  useEffect(() =>
+  {
+    getExerciseDetails();
+  }, []);
 
   if (!updatedExercise)
   {
@@ -83,6 +81,7 @@ export default function ExerciseEdit()
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         formData={updatedExercise}
+        setFormData={setUpdatedExercise}
       />
     </div>
   );

@@ -29,11 +29,6 @@ export default function ExerciseDetails({ userInfo, loggedIn, })
     }
   }
 
-  useEffect(() =>
-  {
-    getExerciseDetails();
-  }, []);
-
   async function handleDelete()
   {
     const confirm = window.confirm('Are you sure you want to delete?');
@@ -63,6 +58,11 @@ export default function ExerciseDetails({ userInfo, loggedIn, })
     }
   }
 
+  useEffect(() =>
+  {
+    getExerciseDetails();
+  }, []);
+
   console.log(exercise);
 
   if (!exercise)
@@ -75,7 +75,10 @@ export default function ExerciseDetails({ userInfo, loggedIn, })
       <div className='d -flex justify-content-between'>
         <div>
           <h2>{exercise.name}</h2>
-          <p>Notes: {exercise.notes}</p>
+          <h5>Type: {exercise.exercise_type}</h5>
+          <h5>Primary: {exercise.primary_muscles}</h5>
+          <h5>Secondary: {exercise.secondary_muscles}</h5>
+          <p>Notes: {exercise.exercise_info.notes}</p>
         </div>
         {userInfo && userInfo.username === exercise.owner && (
           <div>

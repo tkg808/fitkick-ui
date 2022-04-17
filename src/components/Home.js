@@ -20,7 +20,7 @@ export default function Home({ loggedIn, userInfo })
   }
   return (
     <Container className='p-5 border rounded-3 bg-light'>
-      <h1>{userInfo.username}</h1>
+      <h1>{userInfo.username.toUpperCase()}</h1>
 
     </Container>
   );

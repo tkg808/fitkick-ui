@@ -29,11 +29,6 @@ export default function WorkoutEdit({ exercisesList })
     }
   }
 
-  useEffect(() =>
-  {
-    getWorkoutDetails();
-  }, [])
-
   // Dynamically updates state.
   function handleChange(event)
   {
@@ -43,11 +38,10 @@ export default function WorkoutEdit({ exercisesList })
     });
   }
 
-  // Send PUT request.
+  // PUT request.
   async function handleSubmit(event)
   {
     event.preventDefault();
-    console.log(typeof updatedWorkout.exercises[0]);
 
     try
     {
@@ -73,6 +67,11 @@ export default function WorkoutEdit({ exercisesList })
       console.log(error);
     }
   }
+
+  useEffect(() =>
+  {
+    getWorkoutDetails();
+  }, [])
 
   console.log(updatedWorkout);
 

@@ -28,40 +28,6 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList })
     }
   }
 
-  // async function handleAdd(exerciseToAdd)
-  // {
-  //   console.log(exerciseToAdd);
-
-  //   const updateData = { ...workout };
-  //   updateData.exercises.push(exerciseToAdd);
-  //   console.log(updateData);
-
-  //   try
-  //   {
-  //     const response = await fetch(API_URL + `workouts/${id}`,
-  //       {
-  //         method: 'PUT',
-  //         body: JSON.stringify(updateData),
-  //         headers:
-  //         {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `Token ${localStorage.getItem('token')}`,
-  //         },
-  //       });
-
-  //     if (response.status === 200)
-  //     {
-  //       navigate(`/workouts/${id}`);
-  //     }
-  //   }
-  //   catch (error)
-  //   {
-  //     console.log(error);
-  //   }
-  // }
-
-
-
   async function handleDelete()
   {
     const confirm = window.confirm('Are you sure you want to delete?');
