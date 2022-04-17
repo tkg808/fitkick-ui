@@ -5,19 +5,23 @@ import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 export default function Exercises({ userInfo, loggedIn, getExercisesList, exercisesList })
 {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchType, setSearchType] = useState("names");
+  const [radioChoice, setRadioChoice] = useState("name");
 
+  // Refetches when navigated here via useNavigate.
+  // Cleaner UI -- list items change appropriately.
   useEffect(() =>
   {
     getExercisesList();
+
   }, []);
 
+  // Check with both states to prevent weird UI caused by server error.
   if (!loggedIn || !userInfo)
   {
     return (
       <Container className='p-5 border rounded-3 bg-light'>
         <h1>Exercises</h1>
-        <h4>Find exercises based on type or muscles used!</h4>
+        <h4>Sign up and find exercises based on type or muscles used!</h4>
         <Image
           rounded
           fluid
@@ -27,44 +31,53 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
     )
   }
 
-  function handleChange(event)
+  function handleSearchTerm(event)
   {
     setSearchTerm(event.target.value);
   }
 
-  function handleRadio(event)
+  function handleRadioChoice(event)
   {
-    setSearchType(event.target.value);
+    setRadioChoice(event.target.value);
   }
 
-  console.log(searchType);
+  console.log(radioChoice);
+  console.log(exercisesList);
+  console.log(userInfo);
+
 
   return (
     <Container>
       <h1>Exercises</h1>
       {loggedIn && (
         <Link to='/exercises/new'>
-          <Button className='mb-4'>Create an Exercise</Button>
+          <Button className='mb-4'>Create</Button>
         </Link>
       )}
 
-      <form>
+      <form className='mb-2'>
         <input
+          autofocus
           type="text"
           placeholder="Search..."
-          onChange={handleChange}
+          onChange={handleSearchTerm}
           value={searchTerm}
         />
-        <input type="radio" id="name" name="search-type" value="name" onClick={handleRadio} />
-        <label htmlFor="name">Name</label>
-        <input type="radio" id="notes" name="search-type" value="notes" onClick={handleRadio} />
-        <label htmlFor="notes">Notes</label>
+      </form>
+
+      <form className='mb-4'>
+        <input type="radio" id="name" name="search-type" value="name" onClick={handleRadioChoice} checked />
+        <label className='mx-2' htmlFor="name">Name</label>
+        <input type="radio" id="primary_muscles" name="search-type" value="primary_muscles" onClick={handleRadioChoice} />
+        <label className='mx-2' htmlFor="primary_muscles">Primary</label>
+        <input type="radio" id="secondary_muscles" name="search-type" value="secondary_muscles" onClick={handleRadioChoice} />
+        <label className='mx-2' htmlFor="secondary_muscles">Secondary</label>
       </form>
 
       <Row xs={1} s={2} md={3}>
         {exercisesList.filter((exercise) =>
         {
-          if (searchTerm === "" || exercise[searchType].toLowerCase().includes(searchTerm.toLowerCase()))
+          if (searchTerm === "" || exercise[radioChoice].toLowerCase().includes(searchTerm.toLowerCase()))
           {
             return exercise;
           }
@@ -79,7 +92,13 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
                   <Card.Body>
                     <Card.Title>{exercise.name}</Card.Title>
                     <Card.Text>
-                      Notes: {exercise.notes}
+                      Type: {exercise.exercise_type}
+                    </Card.Text>
+                    <Card.Text>
+                      Primary: {exercise.primary_muscles}
+                    </Card.Text>
+                    <Card.Text>
+                      Secondary: {exercise.secondary_muscles}
                     </Card.Text>
                   </Card.Body>
                 </Card>

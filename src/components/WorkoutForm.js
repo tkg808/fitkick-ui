@@ -1,11 +1,9 @@
 
-import { useNavigate } from 'react-router-dom';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import ExerciseDropdown from './ExerciseDropdown';
 
 export default function WorkoutForm({ handleSubmit, handleChange, formData, setFormData, exercisesList })
 {
-  const navigate = useNavigate();
 
   // Selecting an exercise from dropdown.
   function handleAdd(exerciseToAdd)
@@ -16,15 +14,9 @@ export default function WorkoutForm({ handleSubmit, handleChange, formData, setF
 
   function handleRemove(index)
   {
-    console.log(index);
-    console.log(formData);
-
     let tempArray = [...formData.exercises];
     tempArray.splice(index, 1);
     setFormData({ ...formData, exercises: tempArray });
-    console.log(formData);
-    // Forces state to update in UX.
-    // navigate(0);
   }
 
   return (

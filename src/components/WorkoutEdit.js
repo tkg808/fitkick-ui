@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Button } from 'react-bootstrap';
 import WorkoutForm from './WorkoutForm';
 
 import API_URL from '../apiConfig';
@@ -43,15 +42,6 @@ export default function WorkoutEdit({ exercisesList })
       return { ...prevState, [event.target.name]: event.target.value };
     });
   }
-
-  // Selecting an exercise from dropdown.
-  // function handleAdd(exerciseToAdd)
-  // {
-  //   console.log(exerciseToAdd);
-
-  //   const temp = [...updatedWorkout.exercises, exerciseToAdd];
-  //   setUpdatedWorkout({ ...updatedWorkout, exercises: temp });
-  // }
 
   // Send PUT request.
   async function handleSubmit(event)
@@ -97,7 +87,6 @@ export default function WorkoutEdit({ exercisesList })
       < WorkoutForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}
-        // handleAdd={handleAdd}
         formData={updatedWorkout}
         setFormData={setUpdatedWorkout}
         exercisesList={exercisesList}

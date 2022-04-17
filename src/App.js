@@ -181,7 +181,6 @@ export default function App()
             <Route
               path='/workouts/new'
               element={<WorkoutNew
-                loggedIn={loggedIn}
                 exercisesList={exercisesList}
               />}
             />

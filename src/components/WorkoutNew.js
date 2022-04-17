@@ -4,7 +4,7 @@ import WorkoutForm from './WorkoutForm';
 
 import API_URL from '../apiConfig';
 
-export default function WorkoutNew({ loggedIn, exercisesList })
+export default function WorkoutNew({ exercisesList })
 {
   const initialData =
   {
@@ -52,16 +52,6 @@ export default function WorkoutNew({ loggedIn, exercisesList })
     }
   }
 
-  function handleAdd(exerciseToAdd)
-  {
-    console.log(exerciseToAdd);
-
-    const temp = [...newWorkout.exercises, exerciseToAdd];
-    setNewWorkout({ ...newWorkout, exercises: temp });
-  }
-
-  console.log(newWorkout);
-
   return (
     <div>
       <h2>Create New Workout</h2>
@@ -70,7 +60,6 @@ export default function WorkoutNew({ loggedIn, exercisesList })
         handleChange={handleChange}
         formData={newWorkout}
         setFormData={setNewWorkout}
-        // handleAdd={handleAdd}
         exercisesList={exercisesList}
       />
     </div>

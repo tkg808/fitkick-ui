@@ -3,14 +3,13 @@ import { Container, Image } from 'react-bootstrap';
 
 export default function Home({ loggedIn, userInfo })
 {
-  console.log(userInfo);
-  // Check with both states prevent weird UI caused by server error.
+  // Check with both states to prevent weird UI caused by server error.
   if (!loggedIn || !userInfo)
   {
     return (
       <Container className='p-5 border rounded-3 bg-light'>
         <h1>FitKick</h1>
-        <h4>Your sidekick to being fit!</h4>
+        <h4>Your sidekick to being fit! Sign up today!</h4>
         <Image
           rounded
           fluid

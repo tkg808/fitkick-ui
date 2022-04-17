@@ -16,7 +16,7 @@ export default function Workouts({ userInfo, loggedIn, getWorkoutsList, workouts
     return (
       <Container className='p-5 border rounded-3 bg-light'>
         <h1>Workouts</h1>
-        <h4>Find a workout that suits your needs...or make one!</h4>
+        <h4>Sign up and find a workout that suits your needs...or make one!</h4>
         <Image
           rounded
           fluid
