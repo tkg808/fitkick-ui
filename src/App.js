@@ -24,6 +24,7 @@ export default function App()
   const [userInfo, setUserInfo] = useState(null);
   const [workoutsList, setWorkoutsList] = useState([]);
   const [exercisesList, setExercisesList] = useState([]);
+  const [exerciseInfosList, setExerciseInfosList] = useState([]);
   const [error, setError] = useState(false);
 
   // Store token in local storage for persistance.
@@ -95,6 +96,35 @@ export default function App()
     }
   }
 
+  async function getExerciseInfosList()
+  {
+    setError(false);
+
+    try
+    {
+      // Requests use token to validate filter in API views.
+      const response = await fetch(API_URL + 'exercise-infos/',
+        {
+          method: 'GET',
+          headers:
+          {
+            Authorization: `Token ${localStorage.getItem('token')}`
+          }
+        });
+
+      if (response.status === 200)
+      {
+        const data = await response.json();
+        setExerciseInfosList(data);
+      }
+    }
+    catch
+    {
+      // Server error.
+      setError(true);
+    }
+  }
+
   async function getExercisesList()
   {
     setError(false);
@@ -146,10 +176,13 @@ export default function App()
     }
 
     // Separate GET requests for flexibility.
+    getExerciseInfosList();
     getExercisesList();
     getWorkoutsList();
 
   }, []);
+
+  console.log(exerciseInfosList);
 
   return (
     <>
