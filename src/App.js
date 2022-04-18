@@ -173,10 +173,10 @@ export default function App()
     {
       setLoggedIn(true);
       getUserInfo();
+      getExerciseInfosList();
     }
 
     // Separate GET requests for flexibility.
-    getExerciseInfosList();
     getExercisesList();
     getWorkoutsList();
 
@@ -208,7 +208,8 @@ export default function App()
                 loggedIn={loggedIn}
                 getWorkoutsList={getWorkoutsList}
                 workoutsList={workoutsList}
-                setWorkoutsList={setWorkoutsList}
+                getExerciseInfosList={getExerciseInfosList}
+                exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
@@ -230,6 +231,7 @@ export default function App()
               path='/workouts/:id/edit'
               element={<WorkoutEdit
                 exercisesList={exercisesList}
+                exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
@@ -238,8 +240,10 @@ export default function App()
                 userInfo={userInfo}
                 loggedIn={loggedIn}
                 getExercisesList={getExercisesList}
-                exercisesList={exercisesList}
                 setExercisesList={setExercisesList}
+                exercisesList={exercisesList}
+                getExerciseInfosList={getExerciseInfosList}
+                exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
@@ -253,11 +257,13 @@ export default function App()
               element={<ExerciseDetails
                 userInfo={userInfo}
                 loggedIn={loggedIn}
+                getExerciseInfosList={getExerciseInfosList}
+                exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
               path='/exercises/:id/edit'
-              element={<ExerciseEdit />}
+              element={<ExerciseEdit exerciseInfosList={exerciseInfosList} />}
             />
             <Route
               path='/signup'

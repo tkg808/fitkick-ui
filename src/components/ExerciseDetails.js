@@ -4,11 +4,12 @@ import { Container, Button } from 'react-bootstrap';
 
 import API_URL from '../apiConfig';
 
-export default function ExerciseDetails({ userInfo, loggedIn, })
+export default function ExerciseDetails({ userInfo, loggedIn, getExerciseInfosList, exerciseInfosList })
 {
   const { id } = useParams();
   const navigate = useNavigate();
   const [exercise, setExercise] = useState(null);
+  const [info, setInfo] = useState(null);
 
   async function getExerciseDetails()
   {
@@ -26,6 +27,78 @@ export default function ExerciseDetails({ userInfo, loggedIn, })
     catch (error)
     {
       console.log(error);
+    }
+  }
+
+  // SHOW or CREATE.
+  async function getOrPostExerciseInfo()
+  {
+    console.log(exerciseInfosList);
+
+    const infoData = exerciseInfosList.find((element) => 
+    {
+      // Comparing String to Number.
+      return (element.exercise_id == id);
+    });
+
+    console.log(typeof id);
+    console.log(infoData);
+    console.log(typeof infoData);
+
+    // SHOW.
+    if (infoData)
+    {
+      console.log("Yup");
+      try
+      {
+        const response = await fetch(API_URL + `exercise-infos/${infoData.id}`);
+
+        if (response.status === 200)
+        {
+          const data = await response.json();
+          setInfo(data);
+        }
+      }
+      catch (error)
+      {
+        console.log(error);
+      }
+    }
+    else
+    {
+      try
+      {
+        console.log(id);
+        console.log(userInfo);
+
+        const newInfo =
+        {
+          exercise_id: Number(id),
+          owner: userInfo.id,
+          notes: ""
+        };
+
+        const response = await fetch(API_URL + 'exercise-infos/',
+          {
+            method: 'POST',
+            body: JSON.stringify(newInfo),
+            headers:
+            {
+              'Content-Type': 'application/json',
+              Authorization: `Token ${localStorage.getItem('token')}`,
+            }
+          });
+
+        if (response.status === 201)
+        {
+          console.log(response.body);
+          navigate('/exercises');
+        }
+      }
+      catch (error)
+      {
+        console.log(error);
+      }
     }
   }
 
@@ -60,12 +133,15 @@ export default function ExerciseDetails({ userInfo, loggedIn, })
 
   useEffect(() =>
   {
+    getExerciseInfosList();
+    getOrPostExerciseInfo();
     getExerciseDetails();
   }, []);
 
+  console.log(info);
   console.log(exercise);
 
-  if (!exercise)
+  if (!exercise || !info)
   {
     return null;
   }
@@ -78,7 +154,7 @@ export default function ExerciseDetails({ userInfo, loggedIn, })
           <h5>Type: {exercise.exercise_type}</h5>
           <h5>Primary: {exercise.primary_muscles}</h5>
           <h5>Secondary: {exercise.secondary_muscles}</h5>
-          <p>Notes: {exercise.exercise_info.notes}</p>
+          {/* <p>Notes: {exercise.exercise_info.notes}</p> */}
         </div>
         {userInfo && userInfo.username === exercise.owner && (
           <div>

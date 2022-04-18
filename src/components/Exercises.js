@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 
-export default function Exercises({ userInfo, loggedIn, getExercisesList, exercisesList })
+export default function Exercises({ userInfo, loggedIn, getExercisesList, exercisesList, getExerciseInfosList, exerciseInfosList })
 {
   const [searchTerm, setSearchTerm] = useState("");
   const [radioChoice, setRadioChoice] = useState("name");
@@ -11,8 +11,8 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
   // Cleaner UI -- list items change appropriately.
   useEffect(() =>
   {
+    getExerciseInfosList();
     getExercisesList();
-
   }, []);
 
   // Check with both states to prevent weird UI caused by server error.
