@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExerciseForm from './ExerciseForm';
-
 import API_URL from '../apiConfig';
 
-export default function ExerciseNew({ loggedIn })
+export default function ExerciseNew()
 {
   const initialData =
   {
@@ -26,7 +25,6 @@ export default function ExerciseNew({ loggedIn })
   async function createExercise(event)
   {
     event.preventDefault();
-    console.log(newExercise);
 
     try
     {
@@ -51,8 +49,6 @@ export default function ExerciseNew({ loggedIn })
       console.log(error);
     }
   }
-
-  console.log(newExercise);
 
   return (
     <div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 
-export default function Exercises({ userInfo, loggedIn, getExercisesList, exercisesList, getExerciseInfosList, exerciseInfosList })
+export default function Exercises({ userInfo, loggedIn, getExercisesList, exercisesList, getExerciseInfosList })
 {
   const [searchTerm, setSearchTerm] = useState("");
   const [radioChoice, setRadioChoice] = useState("name");
@@ -40,11 +40,6 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
   {
     setRadioChoice(event.target.value);
   }
-
-  console.log(radioChoice);
-  console.log(exercisesList);
-  console.log(userInfo);
-
 
   return (
     <Container>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import API_URL from '../apiConfig';
 
 export default function Signup()
@@ -16,7 +16,6 @@ export default function Signup()
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   function handleChange(event)
   {
@@ -29,7 +28,6 @@ export default function Signup()
   async function handleSignup(event)
   {
     event.preventDefault();
-    console.log(formData);
     setError(false);
 
     try
@@ -64,7 +62,7 @@ export default function Signup()
     }
   }
 
-  function handlePasswordMatch(event)
+  function handlePasswordMatch()
   {
     if (formData.password !== formData.re_password)
     {

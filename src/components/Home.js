@@ -37,8 +37,9 @@ export default function Home({ loggedIn, userInfo })
     startOfWeek,
     getDay,
     locales,
-  })
+  });
 
+  // Demo data.
   const events = [
     {
       title: "Workout",

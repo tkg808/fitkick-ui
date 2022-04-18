@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Container, Button } from 'react-bootstrap';
-
 import API_URL from '../apiConfig';
 
-export default function ExerciseDetails({ userInfo, loggedIn, getExerciseInfosList, exerciseInfosList })
+export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerciseInfosList })
 {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,7 +19,6 @@ export default function ExerciseDetails({ userInfo, loggedIn, getExerciseInfosLi
       if (response.status === 200)
       {
         const data = await response.json();
-        console.log(data);
         setExercise(data);
       }
     }
@@ -30,75 +28,54 @@ export default function ExerciseDetails({ userInfo, loggedIn, getExerciseInfosLi
     }
   }
 
-  // SHOW or CREATE.
-  async function getOrPostExerciseInfo()
+  async function getExerciseInfoDetails(infoId)
   {
-    console.log(exerciseInfosList);
-
-    const infoData = exerciseInfosList.find((element) => 
+    try
     {
-      // Comparing String to Number.
-      return (element.exercise_id == id);
-    });
+      const response = await fetch(API_URL + `exercise-infos/${infoId}`);
 
-    console.log(typeof id);
-    console.log(infoData);
-    console.log(typeof infoData);
-
-    // SHOW.
-    if (infoData)
-    {
-      console.log("Yup");
-      try
+      if (response.status === 200)
       {
-        const response = await fetch(API_URL + `exercise-infos/${infoData.id}`);
-
-        if (response.status === 200)
-        {
-          const data = await response.json();
-          setInfo(data);
-        }
-      }
-      catch (error)
-      {
-        console.log(error);
+        const data = await response.json();
+        setInfo(data);
       }
     }
-    else
+    catch (error)
     {
-      try
+      console.log(error);
+    }
+  }
+
+  async function createExerciseInfoDetails()
+  {
+    try
+    {
+      const newInfo =
       {
-        console.log(id);
-        console.log(userInfo);
+        exercise_id: Number(id),
+        owner: userInfo.id,
+        notes: ""
+      };
 
-        const newInfo =
+      const response = await fetch(API_URL + 'exercise-infos/',
         {
-          exercise_id: Number(id),
-          owner: userInfo.id,
-          notes: ""
-        };
-
-        const response = await fetch(API_URL + 'exercise-infos/',
+          method: 'POST',
+          body: JSON.stringify(newInfo),
+          headers:
           {
-            method: 'POST',
-            body: JSON.stringify(newInfo),
-            headers:
-            {
-              'Content-Type': 'application/json',
-              Authorization: `Token ${localStorage.getItem('token')}`,
-            }
-          });
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token')}`,
+          }
+        });
 
-        if (response.status === 201)
-        {
-          console.log(response.body);
-          navigate('/exercises');
-        }
-      }
-      catch (error)
+      if (response.status === 201)
       {
-        console.log(error);
+        navigate('/exercises');
       }
+    }
+    catch (error)
+    {
+      console.log(error);
     }
   }
 
@@ -134,12 +111,21 @@ export default function ExerciseDetails({ userInfo, loggedIn, getExerciseInfosLi
   useEffect(() =>
   {
     getExerciseInfosList();
-    getOrPostExerciseInfo();
     getExerciseDetails();
-  }, []);
 
-  console.log(info);
-  console.log(exercise);
+    // Comparing String to Number.
+    const infoData = exerciseInfosList.find((element) => element.exercise_id == id);
+
+    // PUT or POST.
+    if (infoData)
+    {
+      getExerciseInfoDetails(infoData.id);
+    }
+    else
+    {
+      createExerciseInfoDetails();
+    }
+  }, []);
 
   if (!exercise || !info)
   {
@@ -154,7 +140,6 @@ export default function ExerciseDetails({ userInfo, loggedIn, getExerciseInfosLi
           <h5>Type: {exercise.exercise_type}</h5>
           <h5>Primary: {exercise.primary_muscles}</h5>
           <h5>Secondary: {exercise.secondary_muscles}</h5>
-          {/* <p>Notes: {exercise.exercise_info.notes}</p> */}
         </div>
         {userInfo && userInfo.username === exercise.owner && (
           <div>

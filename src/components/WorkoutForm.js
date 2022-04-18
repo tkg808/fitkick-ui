@@ -4,7 +4,6 @@ import ExerciseDropdown from './ExerciseDropdown';
 
 export default function WorkoutForm({ handleSubmit, handleChange, formData, setFormData, exercisesList })
 {
-
   // Selecting an exercise from dropdown.
   function handleAdd(exerciseToAdd)
   {
@@ -46,12 +45,6 @@ export default function WorkoutForm({ handleSubmit, handleChange, formData, setF
           <ExerciseDropdown
             handleAdd={handleAdd}
             exercisesList={exercisesList} />
-          {/* <Form.Control
-            // type='text'
-            name='exercises'
-            onChange={handleChange}
-            value={formData.exercises}
-          /> */}
         </Form.Group>
 
         <Button className='mt-4' type='submit'>
@@ -77,11 +70,6 @@ export default function WorkoutForm({ handleSubmit, handleChange, formData, setF
             );
           })
         }
-        {/* {error && (
-          <Alert variant='danger'>
-            Oops, something went wrong! Please try again!
-          </Alert>
-        )} */}
       </Form>
     </div>
   );

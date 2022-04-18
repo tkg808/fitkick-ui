@@ -1,7 +1,7 @@
 import { Form, Button, Dropdown, Alert } from 'react-bootstrap';
 import ChoicesSelect from './ChoicesSelect';
 
-export default function ExerciseForm({ handleSubmit, handleChange, formData, setFormData })
+export default function ExerciseForm({ handleSubmit, handleChange, formData })
 {
   const typeChoices = ["Aerobic", "Anaerobic", "Mobility"];
   const muscleChoices = ["Legs", "Back", "Chest", "Shoulders", "Arms", "Core", "Cardio", "None"]
@@ -55,11 +55,6 @@ export default function ExerciseForm({ handleSubmit, handleChange, formData, set
         <Button className='mt-4' type='submit'>
           Submit
         </Button>
-        {/* {error && (
-          <Alert variant='danger'>
-            Oops, something went wrong! Please try again!
-          </Alert>
-        )} */}
       </Form>
     </div>
   );

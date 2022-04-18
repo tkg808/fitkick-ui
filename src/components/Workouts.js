@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 
-export default function Workouts({ userInfo, loggedIn, getWorkoutsList, workoutsList, getExerciseInfosList, exerciseInfosList })
+export default function Workouts({ userInfo, loggedIn, getWorkoutsList, workoutsList })
 {
   // Refetches when navigated here via useNavigate.
   // Cleaner UI -- list items change appropriately.
@@ -25,9 +25,6 @@ export default function Workouts({ userInfo, loggedIn, getWorkoutsList, workouts
       </Container>
     )
   }
-
-  console.log(userInfo);
-  console.log(workoutsList);
 
   return (
     <Container>

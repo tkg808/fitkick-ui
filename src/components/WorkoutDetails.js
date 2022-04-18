@@ -4,7 +4,7 @@ import { Container, Button } from 'react-bootstrap';
 
 import API_URL from '../apiConfig';
 
-export default function WorkoutDetails({ userInfo, loggedIn, exercisesList })
+export default function WorkoutDetails({ userInfo })
 {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -60,9 +60,7 @@ export default function WorkoutDetails({ userInfo, loggedIn, exercisesList })
   useEffect(() =>
   {
     getWorkoutDetails();
-  }, [])
-
-  console.log(workout);
+  }, []);
 
   // Prevents weird UI before state can update.
   if (!workout)

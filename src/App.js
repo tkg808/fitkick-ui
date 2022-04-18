@@ -13,7 +13,6 @@ import ExerciseDetails from './components/ExerciseDetails';
 import ExerciseEdit from './components/ExerciseEdit';
 import Signup from './components/Signup';
 import Login from './components/Login';
-
 import API_URL from './apiConfig';
 import './App.css';
 
@@ -25,7 +24,6 @@ export default function App()
   const [workoutsList, setWorkoutsList] = useState([]);
   const [exercisesList, setExercisesList] = useState([]);
   const [exerciseInfosList, setExerciseInfosList] = useState([]);
-  const [error, setError] = useState(false);
 
   // Store token in local storage for persistance.
   function handleSetLoggedIn(token)
@@ -52,7 +50,6 @@ export default function App()
       if (response.status === 200)
       {
         const data = await response.json();
-        console.log(data);
         setUserInfo(data);
       }
     }
@@ -65,7 +62,6 @@ export default function App()
   // Destroys token.
   async function handleLogout()
   {
-    setError(false);
     // Use here to prevent weird UI caused by server error.
     setLoggedIn(false);
     setUserInfo(null);
@@ -83,7 +79,6 @@ export default function App()
 
       if (response.status === 204)
       {
-
         localStorage.removeItem('token');
         alert('You have been logged out!');
         navigate('/');
@@ -91,15 +86,12 @@ export default function App()
     }
     catch (error)
     {
-      setError(true);
       console.log(error);
     }
   }
 
   async function getExerciseInfosList()
   {
-    setError(false);
-
     try
     {
       // Requests use token to validate filter in API views.
@@ -118,17 +110,15 @@ export default function App()
         setExerciseInfosList(data);
       }
     }
-    catch
+    catch (error)
     {
       // Server error.
-      setError(true);
+      console.log(error);
     }
   }
 
   async function getExercisesList()
   {
-    setError(false);
-
     try
     {
       const response = await fetch(API_URL + 'exercises/');
@@ -139,17 +129,15 @@ export default function App()
         setExercisesList(data);
       }
     }
-    catch
+    catch (error)
     {
       // Server error.
-      setError(true);
+      console.log(error);
     }
   }
 
   async function getWorkoutsList()
   {
-    setError(false);
-
     try
     {
       const response = await fetch(API_URL + 'workouts/');
@@ -160,10 +148,10 @@ export default function App()
         setWorkoutsList(data);
       }
     }
-    catch
+    catch (error)
     {
       // Server error.
-      setError(true);
+      console.log(error);
     }
   }
 
@@ -181,8 +169,6 @@ export default function App()
     getWorkoutsList();
 
   }, []);
-
-  console.log(exerciseInfosList);
 
   return (
     <>
@@ -208,8 +194,6 @@ export default function App()
                 loggedIn={loggedIn}
                 getWorkoutsList={getWorkoutsList}
                 workoutsList={workoutsList}
-                getExerciseInfosList={getExerciseInfosList}
-                exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
@@ -222,16 +206,12 @@ export default function App()
               path='/workouts/:id'
               element={<WorkoutDetails
                 userInfo={userInfo}
-                loggedIn={loggedIn}
-                exercisesList={exercisesList}
-                setExercisesList={setWorkoutsList}
               />}
             />
             <Route
               path='/workouts/:id/edit'
               element={<WorkoutEdit
                 exercisesList={exercisesList}
-                exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
@@ -240,30 +220,25 @@ export default function App()
                 userInfo={userInfo}
                 loggedIn={loggedIn}
                 getExercisesList={getExercisesList}
-                setExercisesList={setExercisesList}
                 exercisesList={exercisesList}
                 getExerciseInfosList={getExerciseInfosList}
-                exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
               path='/exercises/new'
-              element={<ExerciseNew
-                loggedIn={loggedIn}
-              />}
+              element={<ExerciseNew />}
             />
             <Route
               path='/exercises/:id'
               element={<ExerciseDetails
                 userInfo={userInfo}
-                loggedIn={loggedIn}
                 getExerciseInfosList={getExerciseInfosList}
                 exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
               path='/exercises/:id/edit'
-              element={<ExerciseEdit exerciseInfosList={exerciseInfosList} />}
+              element={<ExerciseEdit />}
             />
             <Route
               path='/signup'

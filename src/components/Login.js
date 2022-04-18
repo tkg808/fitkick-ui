@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import API_URL from '../apiConfig';
 
 export default function Login({ handleSetLoggedIn })
@@ -13,7 +13,6 @@ export default function Login({ handleSetLoggedIn })
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState(false);
 
   // Updates state via form input.
   function handleChange(event)
@@ -28,8 +27,6 @@ export default function Login({ handleSetLoggedIn })
   async function handleLogin(event)
   {
     event.preventDefault();
-    console.log(formData);
-    setError(false);
 
     try
     {
@@ -50,16 +47,11 @@ export default function Login({ handleSetLoggedIn })
         handleSetLoggedIn(data.auth_token);
         navigate('/');
       }
-      else if (response.status === 400)
-      {
-        // Bad request.
-        setError(true);
-      }
     }
-    catch
+    catch (error)
     {
-      // Server error.
-      setError(true);
+      // 400 bad request, 500 server error.
+      console.log(error);
     }
   }
 
@@ -88,12 +80,6 @@ export default function Login({ handleSetLoggedIn })
         </Form.Group>
         <Button type='submit'>Login</Button>
       </Form>
-      {error && (
-        <Alert variant='warning' className='mt-4'>
-          No valid user found with the credentials entered. Please try logging
-          in again or <Link to='/signup'>sign up</Link> for an account.
-        </Alert>
-      )}
     </div>
   );
 }

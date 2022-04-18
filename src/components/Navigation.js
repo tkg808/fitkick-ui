@@ -23,7 +23,6 @@ export default function Navigation({ loggedIn, handleLogout, userInfo })
               <Nav.Link>Exercises</Nav.Link>
             </LinkContainer>
           </Nav>
-          {/* conditional rendering for logged in vs out  */}
           <Nav>
             {userInfo && (
               <Navbar.Text className='justify-content-end'>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import WorkoutForm from './WorkoutForm';
-
 import API_URL from '../apiConfig';
 
 export default function WorkoutNew({ exercisesList })
@@ -27,7 +26,7 @@ export default function WorkoutNew({ exercisesList })
   async function createWorkout(event)
   {
     event.preventDefault();
-    console.log(newWorkout);
+
     try
     {
       const response = await fetch(API_URL + 'workouts/',

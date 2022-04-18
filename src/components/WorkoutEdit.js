@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import WorkoutForm from './WorkoutForm';
-
 import API_URL from '../apiConfig';
 
 export default function WorkoutEdit({ exercisesList })
@@ -71,9 +70,7 @@ export default function WorkoutEdit({ exercisesList })
   useEffect(() =>
   {
     getWorkoutDetails();
-  }, [])
-
-  console.log(updatedWorkout);
+  }, []);
 
   if (!updatedWorkout)
   {
