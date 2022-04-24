@@ -12,7 +12,7 @@ import DatePicker from "react-datepicker";
 export default function Home({ loggedIn, userInfo })
 {
   // Check with both states to prevent weird UI caused by server error.
-  if (!loggedIn || !userInfo)
+  if (!loggedIn && !userInfo)
   {
     return (
       <Container className='p-5 border rounded-3 bg-light'>
@@ -25,6 +25,10 @@ export default function Home({ loggedIn, userInfo })
         />
       </Container>
     )
+  }
+  else if (!userInfo)
+  {
+    return null;
   }
 
   const locales = {

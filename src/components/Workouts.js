@@ -11,7 +11,7 @@ export default function Workouts({ userInfo, loggedIn, getWorkoutsList, workouts
     getWorkoutsList();
   }, []);
 
-  if (!loggedIn || !userInfo)
+  if (!loggedIn && !userInfo)
   {
     return (
       <Container className='p-5 border rounded-3 bg-light'>
@@ -24,6 +24,10 @@ export default function Workouts({ userInfo, loggedIn, getWorkoutsList, workouts
         />
       </Container>
     )
+  }
+  else if (!userInfo)
+  {
+    return null;
   }
 
   return (

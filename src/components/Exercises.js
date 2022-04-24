@@ -16,7 +16,7 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
   }, []);
 
   // Check with both states to prevent weird UI caused by server error.
-  if (!loggedIn || !userInfo)
+  if (!loggedIn && !userInfo)
   {
     return (
       <Container className='p-5 border rounded-3 bg-light'>
@@ -29,6 +29,10 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
         />
       </Container>
     )
+  }
+  else if (!userInfo)
+  {
+    return null;
   }
 
   function handleSearchTerm(event)
