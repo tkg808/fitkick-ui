@@ -28,7 +28,6 @@ export default function App()
   // Store token in local storage for persistance.
   function handleSetLoggedIn(token)
   {
-    console.log(token);
     setLoggedIn(true);
     localStorage.setItem('token', token);
     getUserInfo();
@@ -59,13 +58,13 @@ export default function App()
     }
   }
 
-  // Destroys token.
   async function handleLogout()
   {
     // Use here to prevent weird UI caused by server error.
     setLoggedIn(false);
     setUserInfo(null);
 
+    // Destroys token.
     try
     {
       const response = await fetch(API_URL + 'token/logout/',
@@ -94,7 +93,7 @@ export default function App()
   {
     try
     {
-      // Requests use token to validate filter in API views.
+      // Use token to validate filter in API views.
       const response = await fetch(API_URL + 'exercise-infos/',
         {
           method: 'GET',
@@ -116,6 +115,24 @@ export default function App()
       console.log(error);
     }
   }
+
+  // async function createExerciseInfo()
+  // {
+  //   try
+  //   {
+  //     const response = await fetch(API_URL + 'exercise-infos/',
+  //       {
+  //         method: 'POST',
+  //         body: JSON.stringify(newExercise),
+  //         headers:
+  //         {
+  //           'Content-Type': 'application/json',
+  //           Authorization: `Token ${localStorage.getItem('token')}`,
+  //         }
+  //       });
+
+  //   }
+  // }
 
   async function getExercisesList()
   {
@@ -154,6 +171,9 @@ export default function App()
       console.log(error);
     }
   }
+
+  console.log(exercisesList);
+  console.log(exerciseInfosList);
 
   useEffect(() =>
   {

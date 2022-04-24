@@ -2,7 +2,6 @@ import { Dropdown } from 'react-bootstrap';
 
 export default function ExerciseDropdown({ exercisesList, handleAdd })
 {
-  console.log(exercisesList);
   return (
     <Dropdown >
       <Dropdown.Toggle variant='success'>Exercises</Dropdown.Toggle>

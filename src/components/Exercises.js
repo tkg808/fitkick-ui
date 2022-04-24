@@ -41,6 +41,8 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
     setRadioChoice(event.target.value);
   }
 
+  console.log(exercisesList);
+
   return (
     <Container>
       <h1>Exercises</h1>
@@ -52,7 +54,7 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
 
       <form className='mb-2'>
         <input
-          autofocus
+          autoFocus
           type="text"
           placeholder="Search..."
           onChange={handleSearchTerm}

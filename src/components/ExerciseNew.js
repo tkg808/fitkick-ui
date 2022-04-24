@@ -8,7 +8,9 @@ export default function ExerciseNew()
   const initialData =
   {
     name: '',
-    notes: ''
+    exercise_type: '',
+    primary_muscles: '',
+    secondary_muscles: '',
   }
 
   const navigate = useNavigate();
@@ -16,6 +18,9 @@ export default function ExerciseNew()
 
   function handleChange(event)
   {
+    console.log(event.target.name);
+    console.log(event.target.value);
+
     setNewExercise((prevState) =>
     {
       return { ...prevState, [event.target.name]: event.target.value };
@@ -25,6 +30,8 @@ export default function ExerciseNew()
   async function createExercise(event)
   {
     event.preventDefault();
+
+    console.log(newExercise);
 
     try
     {
