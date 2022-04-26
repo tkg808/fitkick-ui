@@ -8,7 +8,7 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
   const { id } = useParams();
   const navigate = useNavigate();
   const [exercise, setExercise] = useState(null);
-  const [info, setInfo] = useState(null);
+  // const [info, setInfo] = useState(null);
 
   async function getExerciseDetails()
   {
@@ -20,57 +20,6 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
       {
         const data = await response.json();
         setExercise(data);
-      }
-    }
-    catch (error)
-    {
-      console.log(error);
-    }
-  }
-
-  async function getExerciseInfoDetails(infoId)
-  {
-    try
-    {
-      const response = await fetch(API_URL + `exercise-infos/${infoId}`);
-
-      if (response.status === 200)
-      {
-        const data = await response.json();
-        setInfo(data);
-      }
-    }
-    catch (error)
-    {
-      console.log(error);
-    }
-  }
-
-  async function createExerciseInfoDetails()
-  {
-    try
-    {
-      const newInfo =
-      {
-        exercise_id: Number(id),
-        owner: userInfo.id,
-        notes: ""
-      };
-
-      const response = await fetch(API_URL + 'exercise-infos/',
-        {
-          method: 'POST',
-          body: JSON.stringify(newInfo),
-          headers:
-          {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('token')}`,
-          }
-        });
-
-      if (response.status === 201)
-      {
-        navigate('/exercises');
       }
     }
     catch (error)
@@ -114,17 +63,17 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
     getExerciseDetails();
 
     // Comparing String to Number.
-    const infoData = exerciseInfosList.find((element) => element.exercise_id == id);
+    // const infoData = exerciseInfosList.find((element) => element.exercise_id == id);
 
     // PUT or POST.
-    if (infoData)
-    {
-      getExerciseInfoDetails(infoData.id);
-    }
-    else
-    {
-      createExerciseInfoDetails();
-    }
+    // if (infoData)
+    // {
+    //   getExerciseInfoDetails(infoData.id);
+    // }
+    // else
+    // {
+    //   createExerciseInfoDetails();
+    // }
   }, []);
 
   if (!exercise || !info)

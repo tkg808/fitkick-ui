@@ -26,7 +26,6 @@ export default function ExerciseForm({ handleSubmit, handleChange, formData })
             title="exercise_type"
             choices={typeChoices}
             handleChange={handleChange}
-          // value={formData.exercise_type}
           />
         </Form.Group>
         <Form.Group className='my-2' controlId='primary_muscles'>
@@ -35,7 +34,6 @@ export default function ExerciseForm({ handleSubmit, handleChange, formData })
             title="primary_muscles"
             choices={muscleChoices}
             handleChange={handleChange}
-          // value={formData.primary_muscles}
           />
         </Form.Group>
         <Form.Group className='mb-4' controlId='secondary_muscles'>
@@ -44,18 +42,8 @@ export default function ExerciseForm({ handleSubmit, handleChange, formData })
             title="secondary_muscles"
             choices={muscleChoices}
             handleChange={handleChange}
-          // value={formData.primary_muscles}
           />
         </Form.Group>
-        {/* <Form.Group controlId='notes'>
-          <Form.Label>Notes</Form.Label>
-          <Form.Control
-            type='text'
-            name='notes'
-            onChange={handleChange}
-            value={formData.notes}
-          />
-        </Form.Group> */}
         <Button className='mt-4' type='submit'>
           Submit
         </Button>

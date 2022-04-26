@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Container, Button } from 'react-bootstrap';
-
+import ExerciseInfoForm from './ExerciseInfoForm';
 import API_URL from '../apiConfig';
 
-export default function WorkoutDetails({ userInfo })
+export default function WorkoutDetails({ userInfo, exerciseInfosList })
 {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,6 +62,15 @@ export default function WorkoutDetails({ userInfo })
     getWorkoutDetails();
   }, []);
 
+  console.log(workout);
+  console.log(exerciseInfosList);
+  console.log(userInfo);
+
+  if (!id)
+  {
+    navigate('/workouts');
+  }
+
   // Prevents weird UI before state can update.
   if (!workout)
   {
@@ -98,6 +107,9 @@ export default function WorkoutDetails({ userInfo })
               className='m-4 p-3 border rounded-3 bg-light'
               key={index}>
               <h4>{exercise}</h4>
+              <ExerciseInfoForm
+                exerciseInfo={exerciseInfosList.find((info) => (info.exercise_name === exercise))}
+              />
             </Container>
           );
         })

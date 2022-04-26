@@ -116,24 +116,6 @@ export default function App()
     }
   }
 
-  // async function createExerciseInfo()
-  // {
-  //   try
-  //   {
-  //     const response = await fetch(API_URL + 'exercise-infos/',
-  //       {
-  //         method: 'POST',
-  //         body: JSON.stringify(newExercise),
-  //         headers:
-  //         {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `Token ${localStorage.getItem('token')}`,
-  //         }
-  //       });
-
-  //   }
-  // }
-
   async function getExercisesList()
   {
     try
@@ -149,6 +131,39 @@ export default function App()
     catch (error)
     {
       // Server error.
+      console.log(error);
+    }
+  }
+
+  async function createExerciseInfo(exerciseId)
+  {
+    try
+    {
+      // Keys match fields in Django/Python.
+      const newInfo =
+      {
+        exercise_id: Number(exerciseId),
+        notes: ""
+      };
+
+      const response = await fetch(API_URL + 'exercise-infos/',
+        {
+          method: 'POST',
+          body: JSON.stringify(newInfo),
+          headers:
+          {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token')}`,
+          }
+        });
+
+      if (response.status === 201)
+      {
+        navigate('/exercises');
+      }
+    }
+    catch (error)
+    {
       console.log(error);
     }
   }
@@ -188,6 +203,23 @@ export default function App()
     getExercisesList();
     getWorkoutsList();
 
+    // Compares exercisesList to exerciseInfosList to determine if an exerciseInfo needs to be created.
+    if (exercisesList.length !== exerciseInfosList.length)
+    {
+      exercisesList.forEach((exercise) =>
+      {
+        const info = exerciseInfosList.find((element) =>
+        {
+          return element.exercise_id === exercise.id;
+        });
+
+        if (!info)
+        {
+          createExerciseInfo(exercise.id);
+        }
+      });
+    }
+
   }, []);
 
   return (
@@ -226,6 +258,7 @@ export default function App()
               path='/workouts/:id'
               element={<WorkoutDetails
                 userInfo={userInfo}
+                exerciseInfosList={exerciseInfosList}
               />}
             />
             <Route
