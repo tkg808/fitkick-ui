@@ -8,7 +8,7 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
   const { id } = useParams();
   const navigate = useNavigate();
   const [exercise, setExercise] = useState(null);
-  // const [info, setInfo] = useState(null);
+  const [info, setInfo] = useState(null);
 
   async function getExerciseDetails()
   {
@@ -20,6 +20,13 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
       {
         const data = await response.json();
         setExercise(data);
+
+        setInfo({
+          ...exerciseInfosList.find((element) =>
+          {
+            return element.exercise_id === data.id;
+          })
+        });
       }
     }
     catch (error)
@@ -59,22 +66,13 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
 
   useEffect(() =>
   {
-    getExerciseInfosList();
     getExerciseDetails();
-
-    // Comparing String to Number.
-    // const infoData = exerciseInfosList.find((element) => element.exercise_id == id);
-
-    // PUT or POST.
-    // if (infoData)
-    // {
-    //   getExerciseInfoDetails(infoData.id);
-    // }
-    // else
-    // {
-    //   createExerciseInfoDetails();
-    // }
   }, []);
+
+  console.log(exercise);
+  console.log(exerciseInfosList);
+  console.log(info);
+  console.log(id);
 
   if (!exercise || !info)
   {
@@ -89,6 +87,9 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
           <h5>Type: {exercise.exercise_type}</h5>
           <h5>Primary: {exercise.primary_muscles}</h5>
           <h5>Secondary: {exercise.secondary_muscles}</h5>
+        </div>
+        <div>
+          <p>Notes: {info.notes}</p>
         </div>
         {userInfo && userInfo.username === exercise.owner && (
           <div>
