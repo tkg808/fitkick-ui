@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Container, Button } from 'react-bootstrap';
+import ExerciseInfoForm from './ExerciseInfoForm';
 import API_URL from '../apiConfig';
 
 export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerciseInfosList })
@@ -87,9 +88,9 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
           <h5>Type: {exercise.exercise_type}</h5>
           <h5>Primary: {exercise.primary_muscles}</h5>
           <h5>Secondary: {exercise.secondary_muscles}</h5>
-        </div>
-        <div>
-          <p>Notes: {info.notes}</p>
+          <ExerciseInfoForm
+            exerciseInfo={exerciseInfosList.find((element) => (element.exercise_name === exercise.name))}
+          />
         </div>
         {userInfo && userInfo.username === exercise.owner && (
           <div>
