@@ -24,6 +24,7 @@ export default function App()
   const [workoutsList, setWorkoutsList] = useState([]);
   const [exercisesList, setExercisesList] = useState([]);
   const [exerciseInfosList, setExerciseInfosList] = useState([]);
+  const [eventsList, setEventsList] = useState([]);
 
   // Store token in local storage for persistance.
   function handleSetLoggedIn(token)
@@ -93,7 +94,7 @@ export default function App()
   {
     try
     {
-      // Use token to validate filter in API views.
+      // Need token to validation.
       const response = await fetch(API_URL + 'exercise-infos/',
         {
           method: 'GET',
@@ -187,8 +188,34 @@ export default function App()
     }
   }
 
-  console.log(exercisesList);
-  console.log(exerciseInfosList);
+  async function getEventsList()
+  {
+    try
+    {
+      // Need token to validation.
+      const response = await fetch(API_URL + 'events/',
+        {
+          method: 'GET',
+          headers:
+          {
+            Authorization: `Token ${localStorage.getItem('token')}`
+          }
+        });
+
+      if (response.status === 200)
+      {
+        const data = await response.json();
+        setEventsList(data);
+      }
+    }
+    catch (error)
+    {
+      // Server error.
+      console.log(error);
+    }
+  }
+
+  console.log(eventsList);
 
   useEffect(() =>
   {
@@ -196,6 +223,7 @@ export default function App()
     {
       setLoggedIn(true);
       getUserInfo();
+      getEventsList();
       getExerciseInfosList();
     }
 
@@ -238,6 +266,8 @@ export default function App()
                 loggedIn={loggedIn}
                 userInfo={userInfo}
                 workoutsList={workoutsList}
+                eventsList={eventsList}
+                getEventsList={getEventsList}
               />}
             />
             <Route

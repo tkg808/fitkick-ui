@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Image } from 'react-bootstrap';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
@@ -11,53 +11,91 @@ import enUS from 'date-fns/locale/en-US';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ListDropdown from './ListDropdown';
+import API_URL from '../apiConfig';
 
-const locales = {
-  'en-US': enUS,
-}
-
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  locales,
-});
-
-// Demo data.
-const events = [
-  {
-    title: "Test A",
-    workoutId: "1",
-    workoutName: "Back Day",
-    date: new Date(2022, 3, 0)
-  },
-  {
-    title: "Test B",
-    workoutId: "2",
-    workoutName: "Chest Day",
-    date: new Date(2022, 3, 6)
-  },
-  {
-    title: "Workout",
-    workoutId: "1",
-    workoutName: "Back Day",
-    date: new Date(2022, 3, 9)
-  },
-]
-
-export default function Home({ loggedIn, userInfo, workoutsList })
+export default function Home({ loggedIn, userInfo, workoutsList, eventsList, getEventsList })
 {
-  const [newEvent, setNewEvent] = useState(
-    {
-      title: "",
-      workoutId: "",
-      workoutName: "",
-      date: "",
-    });
+  const locales = {
+    'en-US': enUS,
+  }
 
-  const [allEvents, setAllEvents] = useState(events);
+  const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales,
+  });
+
+  const emptyEvent = {
+    title: "",
+    workout_id: "",
+    workout_name: "",
+    date: "",
+  };
+
   const navigate = useNavigate();
+  const [newEvent, setNewEvent] = useState(emptyEvent);
+
+
+  function handleChange(event)
+  {
+    setNewEvent((prevState) =>
+    {
+      return { ...prevState, [event.target.name]: event.target.value };
+    });
+  }
+
+  function handleChoice(workoutChoice)
+  {
+    setNewEvent((prevState) =>
+    {
+      return {
+        ...prevState,
+        workout_id: workoutChoice.id,
+        workout_name: workoutChoice.name
+      }
+    });
+  }
+
+  async function createEvent(event)
+  {
+    event.preventDefault();
+
+    if (newEvent.title && newEvent.workout_id && newEvent.date)
+    {
+      try
+      {
+        const response = await fetch(API_URL + 'events/',
+          {
+            method: 'POST',
+            body: JSON.stringify(newEvent),
+            headers:
+            {
+              'Content-Type': 'application/json',
+              Authorization: `Token ${localStorage.getItem('token')}`,
+            }
+          });
+
+        if (response.status === 201)
+        {
+          setNewEvent(emptyEvent);
+          getEventsList();
+        }
+      }
+      catch (error)
+      {
+        console.log(error);
+      }
+    }
+  }
+
+  // useEffect(() =>
+  // {
+
+  // }, []);
+
+  console.log(eventsList);
 
   // Check with both states to prevent weird UI caused by server error.
   if (!loggedIn && !userInfo)
@@ -79,37 +117,6 @@ export default function Home({ loggedIn, userInfo, workoutsList })
     return null;
   }
 
-  function handleChange(event)
-  {
-    setNewEvent((prevState) =>
-    {
-      return { ...prevState, [event.target.name]: event.target.value };
-    });
-  }
-
-  function handleChoice(workoutChoice)
-  {
-    setNewEvent((prevState) =>
-    {
-      return {
-        ...prevState,
-        workoutId: workoutChoice.id,
-        workoutName: workoutChoice.name
-      }
-    });
-  }
-
-  function handleAddEvent()
-  {
-    if (newEvent.title && newEvent.workoutId && newEvent.date)
-    {
-      setAllEvents([...allEvents, newEvent]);
-    }
-  }
-
-  console.log(newEvent);
-  console.log(allEvents);
-
   return (
     <Container className='p-5 border rounded-3 bg-light'>
       <h1>{userInfo.username.toUpperCase()}</h1>
@@ -124,7 +131,7 @@ export default function Home({ loggedIn, userInfo, workoutsList })
           onChange={handleChange}
         />
         <div>
-          <input type="text" placeholder="Select a Workout" value={newEvent.workoutName} disabled />
+          <input type="text" placeholder="Select a Workout" value={newEvent.workout_name} disabled />
           <ListDropdown
             title="Workouts"
             name="workout"
@@ -138,11 +145,11 @@ export default function Home({ loggedIn, userInfo, workoutsList })
           selected={newEvent.date}
           onChange={(date) => setNewEvent({ ...newEvent, date: date })}
         />
-        <button onClick={handleAddEvent}>Submit</button>
+        <button onClick={createEvent}>Submit</button>
       </div>
       <Calendar
         localizer={localizer}
-        events={events}
+        events={eventsList}
         startAccessor="date"
         endAccessor="date"
         view='month'
