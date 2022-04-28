@@ -1,13 +1,13 @@
 
 import { Container, Form, Button } from 'react-bootstrap';
-import ExerciseDropdown from './ExerciseDropdown';
+import ListDropdown from './ListDropdown';
 
 export default function WorkoutForm({ handleSubmit, handleChange, formData, setFormData, exercisesList })
 {
   // Selecting an exercise from dropdown.
   function handleAdd(exerciseToAdd)
   {
-    const tempArray = [...formData.exercises, exerciseToAdd];
+    const tempArray = [...formData.exercises, exerciseToAdd.name];
     setFormData({ ...formData, exercises: tempArray });
   }
 
@@ -42,9 +42,11 @@ export default function WorkoutForm({ handleSubmit, handleChange, formData, setF
           />
         </Form.Group>
         <Form.Group controlId='exercises'>
-          <ExerciseDropdown
-            handleAdd={handleAdd}
-            exercisesList={exercisesList} />
+          <ListDropdown
+            title="Exercises"
+            list={exercisesList}
+            handleChoice={handleAdd}
+          />
         </Form.Group>
 
         <Button className='mt-4' type='submit'>

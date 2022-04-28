@@ -237,6 +237,7 @@ export default function App()
               element={<Home
                 loggedIn={loggedIn}
                 userInfo={userInfo}
+                workoutsList={workoutsList}
               />}
             />
             <Route
