@@ -61,9 +61,9 @@ export default function ExerciseNew()
     <div>
       <h2>Create New Exercise</h2>
       <ExerciseForm
-        handleSubmit={createExercise}
-        handleChange={handleChange}
         formData={newExercise}
+        handleChange={handleChange}
+        handleSubmit={createExercise}
       />
     </div>);
 }

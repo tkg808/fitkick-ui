@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Image } from 'react-bootstrap';
+import { Container, Image, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import format from 'date-fns/format';
@@ -11,10 +12,13 @@ import enUS from 'date-fns/locale/en-US';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ListDropdown from './ListDropdown';
+import { FaCalendarPlus } from "react-icons/fa";
 import API_URL from '../apiConfig';
 
-export default function Home({ loggedIn, userInfo, workoutsList, eventsList, getEventsList })
+export default function Home({ loggedIn, userInfo, eventsList, getEventsList })
 {
+  const navigate = useNavigate();
+
   const locales = {
     'en-US': enUS,
   }
@@ -27,73 +31,15 @@ export default function Home({ loggedIn, userInfo, workoutsList, eventsList, get
     locales,
   });
 
-  const emptyEvent = {
-    title: "",
-    workout_id: "",
-    workout_name: "",
-    date: "",
-  };
-
-  const navigate = useNavigate();
-  const [newEvent, setNewEvent] = useState(emptyEvent);
-
-
-  function handleChange(event)
+  function handleSelectEvent(event)
   {
-    setNewEvent((prevState) =>
-    {
-      return { ...prevState, [event.target.name]: event.target.value };
-    });
+    navigate(`/events/${event.id}`);
   }
 
-  function handleChoice(workoutChoice)
+  useEffect(() =>
   {
-    setNewEvent((prevState) =>
-    {
-      return {
-        ...prevState,
-        workout_id: workoutChoice.id,
-        workout_name: workoutChoice.name
-      }
-    });
-  }
-
-  async function createEvent(event)
-  {
-    event.preventDefault();
-
-    if (newEvent.title && newEvent.workout_id && newEvent.date)
-    {
-      try
-      {
-        const response = await fetch(API_URL + 'events/',
-          {
-            method: 'POST',
-            body: JSON.stringify(newEvent),
-            headers:
-            {
-              'Content-Type': 'application/json',
-              Authorization: `Token ${localStorage.getItem('token')}`,
-            }
-          });
-
-        if (response.status === 201)
-        {
-          setNewEvent(emptyEvent);
-          getEventsList();
-        }
-      }
-      catch (error)
-      {
-        console.log(error);
-      }
-    }
-  }
-
-  // useEffect(() =>
-  // {
-
-  // }, []);
+    getEventsList();
+  }, []);
 
   console.log(eventsList);
 
@@ -120,41 +66,20 @@ export default function Home({ loggedIn, userInfo, workoutsList, eventsList, get
   return (
     <Container className='p-5 border rounded-3 bg-light'>
       <h1>{userInfo.username.toUpperCase()}</h1>
-      <h3>Add New Event:</h3>
-      <div className="event-form">
-        <input
-          type="text"
-          name="title"
-          placeholder="Add Title"
-          style={{ width: "20%", marginRight: "10px" }}
-          value={newEvent.title}
-          onChange={handleChange}
-        />
-        <div>
-          <input type="text" placeholder="Select a Workout" value={newEvent.workout_name} disabled />
-          <ListDropdown
-            title="Workouts"
-            name="workout"
-            list={workoutsList}
-            handleChoice={handleChoice}
-          />
-        </div>
-        <DatePicker
-          placeholderText="Workout Date"
-          style={{ marginRight: "10px" }}
-          selected={newEvent.date}
-          onChange={(date) => setNewEvent({ ...newEvent, date: date })}
-        />
-        <button onClick={createEvent}>Submit</button>
-      </div>
+      <Link to='/events/new'>
+        <Button className='mb-4'>
+          Add Event
+        </Button>
+      </Link>
       <Calendar
         localizer={localizer}
         events={eventsList}
         startAccessor="date"
         endAccessor="date"
-        view='month'
+        defaultView='month'
         views={['month']}
         style={{ height: 500, margin: "50px" }}
+        onSelectEvent={handleSelectEvent}
       />
     </Container>
   );

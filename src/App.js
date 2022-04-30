@@ -11,6 +11,8 @@ import Exercises from './components/Exercises';
 import ExerciseNew from './components/ExerciseNew';
 import ExerciseDetails from './components/ExerciseDetails';
 import ExerciseEdit from './components/ExerciseEdit';
+import EventDetails from './components/EventDetails';
+import EventNew from './components/EventNew';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import API_URL from './apiConfig';
@@ -265,7 +267,6 @@ export default function App()
               element={<Home
                 loggedIn={loggedIn}
                 userInfo={userInfo}
-                workoutsList={workoutsList}
                 eventsList={eventsList}
                 getEventsList={getEventsList}
               />}
@@ -323,6 +324,17 @@ export default function App()
             <Route
               path='/exercises/:id/edit'
               element={<ExerciseEdit />}
+            />
+            <Route
+              path='/events/:id'
+              element={<EventDetails />}
+              getEventsList={getEventsList}
+            />
+            <Route
+              path='/events/new'
+              element={<EventNew
+                workoutsList={workoutsList}
+              />}
             />
             <Route
               path='/signup'
