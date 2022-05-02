@@ -218,16 +218,6 @@ export default function App()
     }
   }
 
-  function handleStringToDate(dateStr)
-  {
-    const day = dateStr.substring(8, 10);
-    // Months count from 0-11.
-    const month = Number(dateStr.substring(5, 7)) - 1;
-    const year = dateStr.substring(0, 4);
-
-    return new Date(year, month, day);
-  }
-
   console.log(eventsList);
 
   useEffect(() =>
@@ -280,7 +270,6 @@ export default function App()
                 userInfo={userInfo}
                 eventsList={eventsList}
                 getEventsList={getEventsList}
-                handleStringToDate={handleStringToDate}
               />}
             />
             <Route
@@ -329,7 +318,6 @@ export default function App()
               path='/exercises/:id'
               element={<ExerciseDetails
                 userInfo={userInfo}
-                getExerciseInfosList={getExerciseInfosList}
                 exerciseInfosList={exerciseInfosList}
               />}
             />
@@ -340,7 +328,6 @@ export default function App()
             <Route
               path='/events/:id'
               element={<EventDetails />}
-              getEventsList={getEventsList}
             />
             <Route
               path='/events/new'

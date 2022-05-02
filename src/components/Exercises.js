@@ -45,8 +45,6 @@ export default function Exercises({ userInfo, loggedIn, getExercisesList, exerci
     setRadioChoice(event.target.value);
   }
 
-  console.log(exercisesList);
-
   return (
     <Container>
       <h1>Exercises</h1>

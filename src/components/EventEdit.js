@@ -85,8 +85,6 @@ export default function EventEdit({ workoutsList })
     getEventDetails();
   }, []);
 
-  console.log(updatedEvent);
-
   if (!updatedEvent)
   {
     return null;
@@ -94,7 +92,7 @@ export default function EventEdit({ workoutsList })
 
   return (
     <div>
-      <h2>Edit Exercise </h2>
+      <h2>Edit Exercise</h2>
       < EventForm
         formData={updatedEvent}
         setFormData={setUpdatedEvent}

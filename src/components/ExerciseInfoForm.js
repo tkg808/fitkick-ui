@@ -1,5 +1,4 @@
 import { useEffect, useState, } from 'react';
-import { useNavigate } from 'react-router-dom';
 import API_URL from '../apiConfig';
 
 export default function ExerciseInfoForm({ exerciseInfo })
@@ -7,10 +6,8 @@ export default function ExerciseInfoForm({ exerciseInfo })
   // From GET request.
   const [info, setInfo] = useState(null);
 
-  // Compare to other state. For PUT request.
+  // Compares to database => used for PUT request.
   const [newInfo, setNewInfo] = useState(null);
-
-  const navigate = useNavigate();
 
   async function getExerciseInfoDetails(infoId)
   {
@@ -33,7 +30,7 @@ export default function ExerciseInfoForm({ exerciseInfo })
 
   async function updateExerciseInfoDetails()
   {
-    // Only send request if info needs to be updated.
+    // Memoization => only send request if info needs to be updated.
     if (info.notes !== newInfo.notes)
     {
       try
@@ -48,13 +45,6 @@ export default function ExerciseInfoForm({ exerciseInfo })
               Authorization: `Token ${localStorage.getItem('token')}`,
             },
           });
-
-        if (response.status === 200)
-        {
-          const data = response.json();
-          // navigate(`/exercises/${id}`);
-          console.log(data);
-        }
       }
       catch (error)
       {
@@ -94,11 +84,5 @@ export default function ExerciseInfoForm({ exerciseInfo })
         value={newInfo.notes}
       />
     </div>
-    // <Form.Control
-    //   type='text'
-    //   name='notes'
-    //   onChange={handleChange}
-    //   value={formData.notes}
-    // />
   )
 }

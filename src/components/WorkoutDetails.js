@@ -62,10 +62,6 @@ export default function WorkoutDetails({ userInfo, exerciseInfosList })
     getWorkoutDetails();
   }, []);
 
-  console.log(workout);
-  console.log(exerciseInfosList);
-  console.log(userInfo);
-
   if (!id)
   {
     navigate('/workouts');

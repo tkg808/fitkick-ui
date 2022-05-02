@@ -4,7 +4,7 @@ import { Container, Button } from 'react-bootstrap';
 import ExerciseInfoForm from './ExerciseInfoForm';
 import API_URL from '../apiConfig';
 
-export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerciseInfosList })
+export default function ExerciseDetails({ userInfo, exerciseInfosList })
 {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -69,11 +69,6 @@ export default function ExerciseDetails({ userInfo, getExerciseInfosList, exerci
   {
     getExerciseDetails();
   }, []);
-
-  console.log(exercise);
-  console.log(exerciseInfosList);
-  console.log(info);
-  console.log(id);
 
   if (!exercise || !info)
   {

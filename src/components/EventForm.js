@@ -1,14 +1,9 @@
 import { Form, Button } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
-import enUS from 'date-fns/locale/en-US';
 import ListDropdown from './ListDropdown';
 
 export default function EventForm({ formData, setFormData, handleChange, workoutsList, handleChoice, handleSubmit })
 {
-  const locales = {
-    'en-US': enUS,
-  }
-
   return (
     <div className='w-75 p-3'>
       <Form onSubmit={handleSubmit} encType='multipart/form-data'>

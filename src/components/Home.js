@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Container, Image, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import format from 'date-fns/format';
@@ -10,11 +9,7 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
 import enUS from 'date-fns/locale/en-US';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ListDropdown from './ListDropdown';
-import { FaCalendarPlus } from "react-icons/fa";
-import API_URL from '../apiConfig';
 
 export default function Home({ loggedIn, userInfo, eventsList, getEventsList })
 {
@@ -41,8 +36,6 @@ export default function Home({ loggedIn, userInfo, eventsList, getEventsList })
   {
     getEventsList();
   }, []);
-
-  console.log(eventsList);
 
   // Check with both states to prevent weird UI caused by server error.
   if (!loggedIn && !userInfo)

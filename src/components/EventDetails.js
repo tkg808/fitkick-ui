@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Container, Button } from 'react-bootstrap';
 import API_URL from '../apiConfig';
 
-export default function EventDetails({ getEventsList })
+export default function EventDetails()
 {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function EventDetails({ getEventsList })
       if (response.status === 200)
       {
         const data = await response.json();
-        console.log(data);
+
         const date = new Date(data.date);
         setEvent({ ...data, date: date });
       }
@@ -63,8 +63,6 @@ export default function EventDetails({ getEventsList })
     getEventDetails();
   }, []);
 
-  console.log(event);
-
   // Prevents weird UI before state can update.
   if (!event)
   {
@@ -89,7 +87,7 @@ export default function EventDetails({ getEventsList })
         </div>
 
         <Link
-          to={`/events/${event.workout_id}/edit`}
+          to={`/workouts/${event.workout_id}`}
           className='btn btn-secondary'>
           {event.workout_name}
         </Link>

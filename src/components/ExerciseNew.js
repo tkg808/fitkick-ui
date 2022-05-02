@@ -18,9 +18,6 @@ export default function ExerciseNew()
 
   function handleChange(event)
   {
-    console.log(event.target.name);
-    console.log(event.target.value);
-
     setNewExercise((prevState) =>
     {
       return { ...prevState, [event.target.name]: event.target.value };
@@ -30,8 +27,6 @@ export default function ExerciseNew()
   async function createExercise(event)
   {
     event.preventDefault();
-
-    console.log(newExercise);
 
     try
     {
@@ -48,6 +43,7 @@ export default function ExerciseNew()
 
       if (response.status === 201)
       {
+        // User can see exercise was added to list.
         navigate('/exercises');
       }
     }

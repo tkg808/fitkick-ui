@@ -16,9 +16,7 @@ export default function ChoicesSelect({ title, choices, handleChange })
         {choices.map((choice, index) =>
         {
           return (
-            <option key={index} value={choice}
-            // onClick={() => handleChange(choice)}
-            >
+            <option key={index} value={choice}>
               {choice}
             </option>
           )
