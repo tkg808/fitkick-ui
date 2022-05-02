@@ -15,6 +15,7 @@ export default function ExerciseEdit()
     try
     {
       const response = await fetch(API_URL + `exercises/${id}`);
+
       if (response.status === 200)
       {
         const data = await response.json();

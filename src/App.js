@@ -13,6 +13,7 @@ import ExerciseDetails from './components/ExerciseDetails';
 import ExerciseEdit from './components/ExerciseEdit';
 import EventDetails from './components/EventDetails';
 import EventNew from './components/EventNew';
+import EventEdit from './components/EventEdit';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import API_URL from './apiConfig';
@@ -217,6 +218,16 @@ export default function App()
     }
   }
 
+  function handleStringToDate(dateStr)
+  {
+    const day = dateStr.substring(8, 10);
+    // Months count from 0-11.
+    const month = Number(dateStr.substring(5, 7)) - 1;
+    const year = dateStr.substring(0, 4);
+
+    return new Date(year, month, day);
+  }
+
   console.log(eventsList);
 
   useEffect(() =>
@@ -269,6 +280,7 @@ export default function App()
                 userInfo={userInfo}
                 eventsList={eventsList}
                 getEventsList={getEventsList}
+                handleStringToDate={handleStringToDate}
               />}
             />
             <Route
@@ -333,6 +345,12 @@ export default function App()
             <Route
               path='/events/new'
               element={<EventNew
+                workoutsList={workoutsList}
+              />}
+            />
+            <Route
+              path='/events/:id/edit'
+              element={<EventEdit
                 workoutsList={workoutsList}
               />}
             />

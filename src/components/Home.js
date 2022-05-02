@@ -8,6 +8,7 @@ import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
+import addDays from 'date-fns/addDays';
 import enUS from 'date-fns/locale/en-US';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -74,7 +75,9 @@ export default function Home({ loggedIn, userInfo, eventsList, getEventsList })
       <Calendar
         localizer={localizer}
         events={eventsList}
-        startAccessor="date"
+        // Fixes issue of event rendering on the wrong day.
+        startAccessor={({ date }) => addDays(new Date(date), 1)}
+        // endAccessor={({ date }) => addDays(new Date(date), 1)}
         endAccessor="date"
         defaultView='month'
         views={['month']}

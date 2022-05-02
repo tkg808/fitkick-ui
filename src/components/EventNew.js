@@ -44,10 +44,13 @@ export default function EventNew({ workoutsList })
     {
       try
       {
+        // Converts Date object to proper format for request.
+        const formattedDate = JSON.stringify(newEvent.date).substring(1, 11);
+
         const response = await fetch(API_URL + 'events/',
           {
             method: 'POST',
-            body: JSON.stringify(newEvent),
+            body: JSON.stringify({ ...newEvent, date: formattedDate }),
             headers:
             {
               'Content-Type': 'application/json',

@@ -18,7 +18,9 @@ export default function EventDetails({ getEventsList })
       if (response.status === 200)
       {
         const data = await response.json();
-        setEvent(data);
+        console.log(data);
+        const date = new Date(data.date);
+        setEvent({ ...data, date: date });
       }
     }
     catch (error)
@@ -60,6 +62,8 @@ export default function EventDetails({ getEventsList })
   {
     getEventDetails();
   }, []);
+
+  console.log(event);
 
   // Prevents weird UI before state can update.
   if (!event)
