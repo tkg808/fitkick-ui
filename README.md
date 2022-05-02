@@ -1,6 +1,6 @@
 # FitKick-UI
 
-This is the repo for the front-end of the FitKick app. The purpose of this app is to make it easier for people to get/stay fit by helping users find exercises and create workouts based on their needs.
+This is the repo for the front-end of the FitKick app. The purpose of this app is to make it easier for people to get/stay fit by helping users find exercises and create workouts based on their needs. You can also add these workouts to a calendar to plan out your week/month in advance.
 
 ### FitKick Back-End
 
